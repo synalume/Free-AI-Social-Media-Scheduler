@@ -138,8 +138,6 @@ export async function GET(req) {
               data: {
                 status: "completed",
                 publishedUrl: publishedUrl || "Published successfully",
-                publishResult: JSON.stringify(output),
-                publishedAt: new Date()
               }
             });
             dbUpdated = true;

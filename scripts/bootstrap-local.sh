@@ -19,6 +19,7 @@ npm install
 
 echo "Pushing Prisma schema to Neon..."
 npx prisma db push
+npx prisma generate
 
 echo ""
 echo "Ready. Start dev server:"

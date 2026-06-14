@@ -30,7 +30,7 @@ export async function DELETE(req, { params }) {
 
     if (!res.ok) {
       // Fallback to first-party disconnect
-      res = await fetch(`https://api.muapi.ai/api/social/accounts/${id}`, {
+      res = await fetch(`https://muapi.ai/api/social/accounts/${id}`, {
         method: "DELETE",
         headers: { "x-api-key": apiKey }
       });
@@ -64,7 +64,7 @@ export async function PATCH(req, { params }) {
       return NextResponse.json({ error: "MUAPIAPP_API_KEY is not configured" }, { status: 500 });
     }
 
-    const res = await fetch(`https://api.muapi.ai/api/social/accounts/${id}`, {
+    const res = await fetch(`https://muapi.ai/api/social/accounts/${id}`, {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",

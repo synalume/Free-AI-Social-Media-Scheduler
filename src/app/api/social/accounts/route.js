@@ -42,23 +42,24 @@ export async function GET(req) {
 
     // 2. Fetch first-party accounts (connected under the developer's key, e.g. TikTok)
     try {
-      const devRes = await fetch("https://api.muapi.ai/api/social/accounts", {
+      const devRes = await fetch("https://muapi.ai/api/social/accounts", {
         headers: { "x-api-key": apiKey }
       });
       if (devRes.ok) {
         const devAccounts = await devRes.json();
         devAccounts.forEach(acc => {
-          // If it's TikTok, include it
-          if (acc.platform === 2 || acc.platform_name === "tiktok") {
-            accounts.push({
-              id: acc.id,
-              platform: 2, // TikTok
-              platform_name: "tiktok",
-              account_name: acc.account_name || "TikTok Account",
-              platform_user_id: acc.platform_user_id,
-              connected_at: acc.connected_at
-            });
-          }
+          const isYoutube = acc.platform === 1 || acc.platform_name === "youtube";
+          const isTiktok = acc.platform === 2 || acc.platform_name === "tiktok";
+          if (!isYoutube && !isTiktok) return;
+
+          accounts.push({
+            id: acc.id,
+            platform: isYoutube ? 1 : 2,
+            platform_name: isYoutube ? "youtube" : "tiktok",
+            account_name: acc.account_name || (isYoutube ? "YouTube Channel" : "TikTok Account"),
+            platform_user_id: acc.platform_user_id,
+            connected_at: acc.connected_at
+          });
         });
       }
     } catch (err) {
